@@ -1,0 +1,48 @@
+library(genalg)
+z<-data.matrix(matrix)
+
+chromosome =c(1,1,0,0,1,0,1,0,1,0,1,1,1,0,0,1,0,1,0,1,
+              1,1,0,0,1,0,1,0,1,0,1,1,1,0,0,1,0,1,0,1,
+              1,1,0,0,1,0,1,0,1,0,1,1,1,0,0,1,0,1,0,1,
+              1,1,0,0,1,0,1,0,1,0,1,1,1,0,0,1,0,1,0,1)
+
+evalFunc <- function(x) {
+  i=1
+  
+   u=2
+   y=2
+   w=0
+   
+   while(i==80|w==1){
+     
+                w=z[u,y]
+                n=x[c(i)]
+                i=i+1
+                m=x[c(i)]
+                i=i+1
+                if(n==0&m==0)
+                {u = u + 1}
+                else if (n==1&m==1)
+                {u = u - 1}
+                else if (n==1&m==0)
+                {y = y + 1}
+                else if (n==0&m==1)
+                {y = y - 1}
+                
+                
+                
+
+                
+                
+                }
+  
+  
+   
+   return (1/(sqrt((12-y)^2+(12-u)^2)))
+   
+}
+
+iter = 100
+GAmodel <- rbga.bin(size = 80, popSize = 200, iters = iter, mutationChance = 0.05, 
+                    elitism = T, evalFunc = evalFunc)
+cat(genalg:::summary.rbga(GAmodel))
