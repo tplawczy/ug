@@ -1,0 +1,26 @@
+library(genalg)
+dataset <- data.frame(item = c("zegar","obraz-pejzaz","obraz portret", "radio","laptop","lampka nocna",
+                               "srebrne sztucce","porcelana","figura z brazu","skorzana torebka","odkurzacz"),
+                      wartosc=c(100,300,200,40,500,70,100,250,300,280,300), waga=c(7,7,6,2,5,6,1,3,10,3,15))
+limitwagi <- 25
+chromosome = c(1, 0, 0, 1, 1, 0, 0,1,1,0,0)
+dataset[chromosome == 1, ]
+cat(chromosome %*% dataset$wartosc)
+
+evalFunc <- function(x) {
+  current_solution_wart <- x %*% dataset$wartosc
+  current_solution_waga <- x %*% dataset$waga
+  
+  if (current_solution_waga > limitwagi) 
+    return(0) else return(-current_solution_wart)
+}
+
+iter = 100
+GAmodel <- rbga.bin(size = 11, popSize = 200, iters = iter, mutationChance = 0.05, 
+                    elitism = T, evalFunc = evalFunc)
+cat(genalg:::summary.rbga(GAmodel))
+
+
+solution = c(0, 1, 1, 0, 1, 0, 1,1,0,1,0)
+dataset[solution == 1, ]
+cat(paste(solution %*% dataset$wartosc, "/", sum(dataset$wartosc)))
