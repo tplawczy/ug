@@ -1,6 +1,7 @@
 library(tidyverse)
 library(dplyr)
 
+
 path_loc <- "C:\Users\Tomek\Documents"
 setwd(path_loc)
 iris_with_errors <- read_csv("iris_with_errors.csv")
