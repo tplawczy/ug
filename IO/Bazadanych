@@ -1,0 +1,78 @@
+library(tidyverse)
+library(dplyr)
+
+path_loc <- "C:\Users\Tomek\Documents"
+setwd(path_loc)
+iris_with_errors <- read_csv("iris_with_errors.csv")
+iris_with_errors$sepal.length <- as.numeric(iris_with_errors$sepal.length)
+iris_with_errors$sepal.width <- as.numeric(iris_with_errors$sepal.width)
+#type.convert(iris_with_errors) cols(sepal.length = col_double(),sepal.width = col_double())
+#type.convert(iris_with_errors) cols("sepal.length" = col_double(),"sepal.width" = col_double())
+glimpse(iris_with_errors)
+is.na(iris_with_errors)
+is.na(iris_with_errors$sepal.width)
+is.na(iris_with_errors$petal.length)
+is.na(iris_with_errors$sepal.length)
+is.na(iris_with_errors$petal.width)
+
+
+
+
+
+#sepal.lenght 1 missing value and petal width
+iris_with_errors %>%
+summarise(count = sum(is.na(sepal.length)))
+iris_with_errors %>%
+summarise(count = sum(is.na(sepal.width)))
+iris_with_errors %>%
+summarise(count = sum(is.na(petal.length)))
+iris_with_errors %>%
+summarise(count = sum(is.na(petal.width)))
+iris_with_errors %>%
+summarise(count = sum(is.na(variety)))
+          
+
+
+iris_with_errors %>%
+  filter( sepal.length<=0|sepal.length>=15) %>%
+  select(sepal.length)
+
+
+
+ 
+#naprawa danych
+iris_with_errors<-iris_with_errors %>%
+  mutate(sepal.length = replace(sepal.length,
+                                is.na(sepal.length),
+                                median(sepal.length, na.rm = T)))
+iris_with_errors<-iris_with_errors %>%
+  mutate(sepal.width = replace(sepal.width,
+                                is.na(sepal.width),
+                                median(sepal.width, na.rm = T)))
+iris_with_errors<-iris_with_errors %>%
+  mutate(petal.width = replace(petal.width,
+                               is.na(petal.width),
+                               median(petal.width, na.rm = T)))
+iris_with_errors<-iris_with_errors %>%
+  mutate(petal.length = replace(petal.length,
+                               is.na(petal.length),
+                               median(petal.length, na.rm = T)))
+
+
+iris_with_errors %>%
+  filter( sepal.length<=0|sepal.length>=15) %>%
+  select(sepal.length)
+
+iris_with_errors<-iris_with_errors %>%
+  mutate(sepal.length = replace(sepal.length, sepal.length == 30.9 , median(petal.length, na.rm = T))) 
+
+iris_with_errors %>%
+  filter( sepal.width<=0|sepal.width>=15) %>%
+  select(sepal.width)
+
+iris_with_errors<-iris_with_errors<-iris_with_errors %>%
+  mutate(sepal.width = replace(sepal.width, sepal.width == -2.7 , median(petal.width, na.rm = T))) 
+
+iris_with_errors %>%
+  filter( petal.length<=0|sepal.width>=15) %>%
+  select(petal.length)
