@@ -1,8 +1,8 @@
-package antylex;
+package antylex0;
 
 
 import java.util.Scanner;
-public class JohnsonTrotter {   
+public class antylex0 {
 	
 	 public static void main(String args[]) {
 	
@@ -24,15 +24,17 @@ public class JohnsonTrotter {
 		 }
 	 	//zmiana miejscami elementów sąsiadujących, i kierunków
 		 private static void zamien(int[] arr, Integer index, boolean[] kierunek) {
-		 
-		int x = 2* ((kierunek[index]) ? 1 : 0); 
-		   zamien(arr, index, index - 1 + x);
-		   zamien(kierunek, index, index -1 + x);
-		   index = index - 1 + x;
-		  
+		  if (kierunek[index]) {
+		   zamien(arr, index, index + 1);
+		   zamien(kierunek, index, index + 1);
+		   index++;
+		  } else {
+		   zamien(arr, index, index - 1);
+		   zamien(kierunek, index, index - 1);
+		   index--;
+		  }
 		  OdwrocInneWieksze(arr, kierunek, index);
 		 }
-
 
 		 private static void OdwrocInneWieksze(int[] arr, boolean[] kierunek, Integer index) {
 		  for (int i = 0; i < arr.length; i++) {
@@ -43,33 +45,34 @@ public class JohnsonTrotter {
 
 		 }
    
-		 
-		
-		 
-		 
 		 private static Integer znajdzWiekszyElement(int[] arr, boolean[] kierunek) {
 		  Integer max = Integer.MIN_VALUE;
 		  Integer maxIndex = -1;
-		  boolean prawo;
-		  for (int i = 0; i < arr.length; i++) {			  
-			  if (kierunek[i])
-			  { prawo = (i < (arr.length - 1));}
-			    else 
-		  	    {prawo = (i > 0);}  	     
-		    if (prawo) {
-		    	int x = 2 * ((kierunek[i]) ? 1 : 0);	
-		     if (arr[i] > arr[i - 1 + x]) {
+		  for (int i = 0; i < arr.length; i++) {
+		   if (kierunek[i]) {
+		    if (i < (arr.length - 1)) {
+		     if (arr[i] > arr[i + 1]) {
 		      if (arr[i] > max) {
 		       max = arr[i];
-		       maxIndex = i;		      
+		       maxIndex = i;
 		      }
 		     }
 		    }
-		  }		    
+		   } else {
+		    if (i > 0) {
+		     if (arr[i] > arr[i - 1]) {
+		      if (arr[i] > max) {
+		       max = arr[i];
+		       maxIndex = i;
+		      }
+		     }
+		    }
+		   }
+		  }
 		  return maxIndex;
 		 }
-		  
-		 private static void zamien (int [] arr, int pierwszy, int drugi) {
+
+		 private static void zamien(int[] arr, int pierwszy, int drugi) {
 		  int temp = arr[pierwszy];
 		  arr[pierwszy] = arr[drugi];
 		  arr[drugi] = temp;
