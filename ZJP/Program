@@ -1,0 +1,94 @@
+package antylex0;
+
+
+import java.util.Scanner;
+public class antylex0 {
+	
+	 public static void main(String args[]) {
+	
+		  System.out.println("Wprowadz liczbę elementów");
+		  Scanner liczbaelem = new Scanner(System.in);
+		  int n = liczbaelem.nextInt();
+		  liczbaelem.close();
+		  int arr[] = new int[n];
+		  for (int i = 1; i <= n; i++) {
+		   arr[i - 1] = i;
+		  }
+		  boolean[] kierunek = new boolean[n];
+		// prawda odpowiada kierunkowi w prawo, fałsz w lewo
+		  Integer index;
+		  while ((index = znajdzWiekszyElement(arr, kierunek)) != -1) {
+		   print(arr);
+		   zamien(arr, index, kierunek);
+		  }
+		 }
+	 	//zmiana miejscami elementów sąsiadujących, i kierunków
+		 private static void zamien(int[] arr, Integer index, boolean[] kierunek) {
+		  if (kierunek[index]) {
+		   zamien(arr, index, index + 1);
+		   zamien(kierunek, index, index + 1);
+		   index++;
+		  } else {
+		   zamien(arr, index, index - 1);
+		   zamien(kierunek, index, index - 1);
+		   index--;
+		  }
+		  odwrocInneWieksze(arr, kierunek, index);
+		 }
+
+		 private static void odwrocInneWieksze(int[] arr, boolean[] kierunek, Integer index) {
+		  for (int i = 0; i < arr.length; i++) {
+		   if (arr[i] > arr[index]) {
+		    kierunek[i] = !kierunek[i];
+		   }
+		  }
+
+		 }
+   
+		 static Integer znajdzWiekszyElement(int[] arr, boolean[] kierunek) {
+		  Integer max = Integer.MIN_VALUE;
+		  Integer maxIndex = -1;
+		  for (int i = 0; i < arr.length; i++) {
+		   if (kierunek[i]) {
+		    if (i < (arr.length - 1)) {
+		     if (arr[i] > arr[i + 1]) {
+		      if (arr[i] > max) {
+		       max = arr[i];
+		       maxIndex = i;
+		      }
+		     }
+		    }
+		   } else {
+		    if (i > 0) {
+		     if (arr[i] > arr[i - 1]) {
+		      if (arr[i] > max) {
+		       max = arr[i];
+		       maxIndex = i;
+		      }
+		     }
+		    }
+		   }
+		  }
+		  return maxIndex;
+		 }
+
+		 private static void zamien(int[] arr, int pierwszy, int drugi) {
+		  int temp = arr[pierwszy];
+		  arr[pierwszy] = arr[drugi];
+		  arr[drugi] = temp;
+		 }
+
+		 private static void zamien(boolean[] arr, int pierwszy, int drugi) {
+		  boolean temp = arr[pierwszy];
+		  arr[pierwszy] = arr[drugi];
+		  arr[drugi] = temp;
+		 }
+
+		 private static void print(int[] arr) {
+		  for (int i = 0; i < arr.length; i++) {
+		   System.out.print(arr[i] + " ");
+		  }
+		  System.out.println();
+		 }
+
+}
