@@ -54,28 +54,19 @@ public class JohnsomTrotter1 {
 			   {wynik = (i < (arr.length - 1));}
 			     else 
 		  	   {wynik = (i > 0);} 
-		   if (kierunek[i]) {
-		    if (i < (arr.length - 1)) {
-		     if (arr[i] > arr[i + 1]) {
-		      if (arr[i] > max) {
-		       max = arr[i];
-		       maxIndex = i;
-		      }
+		  
+		    if (wynik) {
+		    	int x = 2 * ((kierunek[i]) ? 1 : 0);	
+		       if (arr[i] > arr[i - 1 + x]) {
+		         if (arr[i] > max) {
+		         max = arr[i];
+		         maxIndex = i;		      
+		         }
+		       }
 		     }
-		    }
-		   } else {
-		    if (i > 0) {
-		     if (arr[i] > arr[i - 1]) {
-		      if (arr[i] > max) {
-		       max = arr[i];
-		       maxIndex = i;
-		      }
-		     }
-		    }
 		   }
+		   return maxIndex;
 		  }
-		  return maxIndex;
-		 }
 
 		 private static void zamien(int[] arr, int pierwszy, int drugi) {
 		  int temp = arr[pierwszy];
