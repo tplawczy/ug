@@ -1,0 +1,78 @@
+library(genalg)
+z=rbind(c(1,1,1,1,1,1,1,1,1,1,1,1),
+      c(1,0,0,0,1,0,0,0,1,0,0,1),
+      c(1,1,1,0,0,0,1,0,1,1,0,1),
+      c(1,0,0,0,1,0,1,0,0,0,0,1),
+      c(1,0,1,0,1,1,0,0,1,1,0,1),
+      c(1,0,0,1,1,0,0,0,1,0,0,1),
+      c(1,0,0,0,0,0,1,0,0,0,1,1),
+      c(1,0,1,0,0,1,1,0,1,0,0,1),
+      c(1,0,1,1,1,0,0,0,1,1,0,1),
+      c(1,0,1,0,1,1,0,1,0,1,0,1),
+      c(1,0,1,0,0,0,0,0,0,0,0,1),
+      c(1,1,1,1,1,1,1,1,1,1,1,1))
+
+string = c(0, 1, 0, 1, 1, 0, 0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,1,0,1,1,
+            1, 0, 0, 1, 1, 0, 0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,1,0,1,1,
+             1, 0, 0, 1, 1, 0, 0,1,1,0,0,1,1,0,1,0,0,0,1,1,0,1,0,1,1,
+             0,0,1,1,0)
+#hromosome[c(6)]
+#p=0,1 l=1,0 g=1,1 d=0,0
+#dataset[chromosome == 1, ]
+
+
+
+
+
+
+evalFunc <- function(string) {
+  x = 2
+  y = 2   
+  lab_size = 10
+exit=lab_size*2+ 2
+  returnVal3=0
+  step=1
+      
+  while(step<length(string)) 
+{
+if(x<2&y<2){break}
+else if(string[step]==1&string[step+1]==1&z[x-1,y]==0){x=x-1 ;step=step+2}
+else if(string[step]==0&string[step+1]==0&z[x+1,y]==0){x=x+1 ;step=step+2} 
+else if(string[step]==1&string[step+1]==0&z[x,y+1]==0){y=y+1 ;step=step+2} 
+else if(string[step]==0&string[step+1]==1&z[x,y-1]==0){y=y-1 ;step=step+2} 
+ }
+      show(x)
+    show(y)
+    show(step)
+    show(returnVal3)
+    returnVal3= (exit - x - y)
+  return(returnVal3) 
+
+}
+
+
+
+
+
+
+
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+
+
+
+iter = 100
+GAmodel <- rbga.bin(size = 80, popSize = 200, iters = iter, mutationChance = 0.1, 
+                  elitism = T, evalFunc = evalFunc)
+cat(genalg:::summary.rbga(GAmodel))
